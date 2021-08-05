@@ -11,6 +11,8 @@ def pegar_dolar():
     result = result+result*0.011
     texto = f'DÓLAR: R${result :.3f}'
     texto_cotacoes['text'] = texto
+    x1= float(entry1.get())
+    texto_cotacao_total['text'] = f'TOTAL: R${result*x1 :.2f}'
 
 def pegar_euro():
     search_result = get_currency_cross_recent_data("EUR/BRL",order='descending')
@@ -18,24 +20,33 @@ def pegar_euro():
     result = result+result*0.006
     result = result+result*0.035
     result = result+result*0.011
-    texto = f'EURO: R${result :.3f}'
-    texto_cotacoes['text'] = texto
-
+    texto_cotacoes['text'] = f'EURO: R${result :.3f}'
+    x1= float(entry1.get())
+    texto_cotacao_total['text'] = f'TOTAL: R${result*x1 :.2f}'
 
 janela = Tk()
-janela.geometry("325x150")
+janela.geometry("450x250")
 janela.title('PRIME Câmbio')
 
 janela.call('source', 'azure-dark.tcl')
 ttk.Style().theme_use('azure-dark')
 
 dolarbutton = Button(janela, text = "Dólar", command = pegar_dolar)
-dolarbutton.grid(column=1,row=1,padx=20, pady=25)
+dolarbutton.grid(column=1,row=2, padx=10)
 
 eurobutton = Button(janela, text = "Euro", command = pegar_euro)
-eurobutton.grid(column=3,row=1)
+eurobutton.grid(column=3,row=2, padx=10)
+
+entrada = Canvas(janela,width=300,height=100)
+entrada.grid(column=2, row=1)
+entry1 = Entry(janela) 
+entrada.create_window(160, 50, window=entry1)
 
 texto_cotacoes = Label(janela, text="")
-texto_cotacoes.grid(column=2,row=2, padx=30,pady=10)
+texto_cotacoes.grid(column=2,row=3)
+
+texto_cotacao_total = Label(janela, text="")
+texto_cotacao_total.grid(column=2,row=4)
+
 
 janela.mainloop()
